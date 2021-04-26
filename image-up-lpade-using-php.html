@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Bootstrsp css link -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <!-- google font link -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Orelega+One&display=swap" rel="stylesheet">
+    <!-- Custom css link -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/image-uplode.css">
+    <link rel="stylesheet" href="css/code-blocks.css">
+</head>
+<body>
+   <!-- Strat navbar sections -->
+   <nav class="navbar navbar-expand-lg sticky-top navbar-light nav-style">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><span>Coder</span>Tips</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="teturial.html">Teturial</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="tips.html">Tips</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About Us</a>
+          </li>
+        </ul>
+        <div class="navbar navbar-nav navbar-right">
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-user-plus"></i>Singp</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="fas fa-sign-in-alt"></i>Login</a>
+          </li>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+<!-- End navbar sections --> 
+
+
+
+
+
+
+
+<div class="container">     
+      <div class="row">
+        <div class="col-sm-8 left-side">
+  
+          <div class="posts-wrapper details-page" style="margin-top: 0px;">
+  
+          <h1 class="text-center">Complete user registration system using PHP and MySQL database<span id="ezoic-pub-ad-placeholder-119" class="ezoic-adpicker-ad"></span><span class="ezoic-ad box-3 box-3119 adtester-container adtester-container-119" data-ez-name="codewithawa_com-box-3"><span id="div-gpt-ad-codewithawa_com-box-3-0" ezaw="728" ezah="90" style="position:relative;z-index:0;display:inline-block;padding:0;min-height:90px;min-width:728px;" class="ezoic-ad"><script data-ezscrex="false" data-cfasync="false" type="text/javascript" style="display:none;">if(typeof __ez_fad_position != 'undefined'){__ez_fad_position('div-gpt-ad-codewithawa_com-box-3-0')};</script></span></span></h1>
+          <br/><hr>
+  
+          <div class="post-body">
+            <p>In this tutorial, I walk you through the complete process of creating a user registration system where users can create an account by providing username, email and password, login and logout using PHP and MySQL. I will also show you how you can make some pages accessible only to logged-in users. Any other user not logged in will not be able to access the page.</p>
+  
+  <p>The first thing we&#39;ll need to do is set up our database. </p>
+  
+  <p>Create a database called <strong>registration</strong>. In the <strong>registration</strong> database, add a table called <strong>users</strong>. The users table will take the following four fields.</p>
+  
+  <ul>
+      <li>id</li>
+      <li>username  -  varchar(100)</li>
+      <li>email  -  varchar(100)</li>
+      <li>password  -  varchar(100)</li>
+  </ul>
+  
+  <p>You can create this using a MySQL client like PHPMyAdmin.</p>
+  
+  <p><img alt="" src="https://codewithawa.com/assets/post_images/Screenshot from 2017-07-09 16-32-51.png.2017-07-09.1499614401.png" style="height:135px; width:100%"/></p>
+  
+  <p>Or you can create it on the MySQL prompt using the following SQL script:</p>
+  
+  <pre><code class="language-php">CREATE TABLE `users` (
+    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `username` varchar(100) NOT NULL,
+    `email` varchar(100) NOT NULL,
+    `password` varchar(100) NOT NULL
+  ) ENGINE=InnoDB DEFAULT CHARSET=latin1;</code></pre>
+  
+  <p>And that&#39;s it with the database. </p>
+  
+  <p>Now create a folder called <strong>registration</strong> in a directory accessible to our server. i.e create the folder inside htdocs (if you are using XAMPP server) or inside <strong>www </strong>(if you are using wampp server).</p>
+  
+  <p>Inside the folder <strong>registration, </strong>create the following files: </p>
+  
+  <p><img alt="" src=""/> </p>
+  
+  <p>Open these files up in a text editor of your choice. Mine is Sublime Text 3.</p>
+  
+  <h3>Registering a user</h3>
+  
+  <p>Open the register.php file and paste the following code in it:</p>
+  
+  <p><strong>regiser.php:</strong></p>
+  
+  <pre><code class="language-php">&lt;?php include(&#39;server.php&#39;) ?&gt;
+  &lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Registration system PHP and MySQL&lt;/title&gt;
+    &lt;link rel=&#34;stylesheet&#34; type=&#34;text/css&#34; href=&#34;style.css&#34;&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div class=&#34;header&#34;&gt;
+        &lt;h2&gt;Register&lt;/h2&gt;
+    &lt;/div&gt;
+      
+    &lt;form method=&#34;post&#34; action=&#34;register.php&#34;&gt;
+        &lt;?php include(&#39;errors.php&#39;); ?&gt;
+        &lt;div class=&#34;input-group&#34;&gt;
+          &lt;label&gt;Username&lt;/label&gt;
+          &lt;input type=&#34;text&#34; name=&#34;username&#34; value=&#34;&lt;?php echo $username; ?&gt;&#34;&gt;
+        &lt;/div&gt;
+        &lt;div class=&#34;input-group&#34;&gt;
+          &lt;label&gt;Email&lt;/label&gt;
+          &lt;input type=&#34;email&#34; name=&#34;email&#34; value=&#34;&lt;?php echo $email; ?&gt;&#34;&gt;
+        &lt;/div&gt;
+        &lt;div class=&#34;input-group&#34;&gt;
+          &lt;label&gt;Password&lt;/label&gt;
+          &lt;input type=&#34;password&#34; name=&#34;password_1&#34;&gt;
+        &lt;/div&gt;
+        &lt;div class=&#34;input-group&#34;&gt;
+          &lt;label&gt;Confirm password&lt;/label&gt;
+          &lt;input type=&#34;password&#34; name=&#34;password_2&#34;&gt;
+        &lt;/div&gt;
+        &lt;div class=&#34;input-group&#34;&gt;
+          &lt;button type=&#34;submit&#34; class=&#34;btn&#34; name=&#34;reg_user&#34;&gt;Register&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;p&gt;
+            Already a member? &lt;a href=&#34;login.php&#34;&gt;Sign in&lt;/a&gt;
+        &lt;/p&gt;
+    &lt;/form&gt;
+  &lt;/body&gt;
+  &lt;/html&gt;</code></pre>
+  
+  <p> </p>
+  
+  <p>Nothing complicated so far right?</p>
+  
+  <p>A few things to note here:</p>
+  
+  <p>First is that our form&#39;s <strong>action</strong> attribute is set to register.php. This means that when the form submit button is clicked, all the data in the form will be submitted to the same page (register.php). The part of the code that receives this form data is written in the server.php file and that&#39;s why we are including it at the very top of the register.php file.</p>
+  
+  <p>Notice also that we are including the errors.php file to display form errors. We will come to that soon.</p>
+  
+  <p>As you can see in the head section, we are linking to a style.css file. Open up the style.css file and paste the following CSS in it:</p>
+  
+  <pre><code class="language-css">* {
+    margin: 0px;
+    padding: 0px;
+  }
+  body {
+    font-size: 120%;
+    background: #F8F8FF;
+  }
+  
+  .header {
+    width: 30%;
+    margin: 50px auto 0px;
+    color: white;
+    background: #5F9EA0;
+    text-align: center;
+    border: 1px solid #B0C4DE;
+    border-bottom: none;
+    border-radius: 10px 10px 0px 0px;
+    padding: 20px;
+  }
+  form, .content {
+    width: 30%;
+    margin: 0px auto;
+    padding: 20px;
+    border: 1px solid #B0C4DE;
+    background: white;
+    border-radius: 0px 0px 10px 10px;
+  }
+  .input-group {
+    margin: 10px 0px 10px 0px;
+  }
+  .input-group label {
+    display: block;
+    text-align: left;
+    margin: 3px;
+  }
+  .input-group input {
+    height: 30px;
+    width: 93%;
+    padding: 5px 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid gray;
+  }
+  .btn {
+    padding: 10px;
+    font-size: 15px;
+    color: white;
+    background: #5F9EA0;
+    border: none;
+    border-radius: 5px;
+  }
+  .error {
+    width: 92%; 
+    margin: 0px auto; 
+    padding: 10px; 
+    border: 1px solid #a94442; 
+    color: #a94442; 
+    background: #f2dede; 
+    border-radius: 5px; 
+    text-align: left;
+  }
+  .success {
+    color: #3c763d; 
+    background: #dff0d8; 
+    border: 1px solid #3c763d;
+    margin-bottom: 20px;
+  }
+  </code></pre>
+  
+  <p>Now the form looks beautiful.</p>
+  
+  <p>Let&#39;s now write the code that will receive information submitted from the form and store (register) the information in the database. As promised earlier, we do this in the server.php file.</p>
+  
+  <p>Open server.php and paste this code in it:</p>
+  
+  <p><strong>server.php</strong></p>
+  
+  <pre><code class="language-php">&lt;?php
+  session_start();
+  
+  // initializing variables
+  $username = &#34;&#34;;
+  $email    = &#34;&#34;;
+  $errors = array(); 
+  
+  // connect to the database
+  $db = mysqli_connect(&#39;localhost&#39;, &#39;root&#39;, &#39;&#39;, &#39;registration&#39;);
+  
+  // REGISTER USER
+  if (isset($_POST[&#39;reg_user&#39;])) {
+    // receive all input values from the form
+    $username = mysqli_real_escape_string($db, $_POST[&#39;username&#39;]);
+    $email = mysqli_real_escape_string($db, $_POST[&#39;email&#39;]);
+    $password_1 = mysqli_real_escape_string($db, $_POST[&#39;password_1&#39;]);
+    $password_2 = mysqli_real_escape_string($db, $_POST[&#39;password_2&#39;]);
+  
+    // form validation: ensure that the form is correctly filled ...
+    // by adding (array_push()) corresponding error unto $errors array
+    if (empty($username)) { array_push($errors, &#34;Username is required&#34;); }
+    if (empty($email)) { array_push($errors, &#34;Email is required&#34;); }
+    if (empty($password_1)) { array_push($errors, &#34;Password is required&#34;); }
+    if ($password_1 != $password_2) {
+      array_push($errors, &#34;The two passwords do not match&#34;);
+    }
+  
+    // first check the database to make sure 
+    // a user does not already exist with the same username and/or email
+    $user_check_query = &#34;SELECT * FROM users WHERE username=&#39;$username&#39; OR email=&#39;$email&#39; LIMIT 1&#34;;
+    $result = mysqli_query($db, $user_check_query);
+    $user = mysqli_fetch_assoc($result);
+    
+    if ($user) { // if user exists
+      if ($user[&#39;username&#39;] === $username) {
+        array_push($errors, &#34;Username already exists&#34;);
+      }
+  
+      if ($user[&#39;email&#39;] === $email) {
+        array_push($errors, &#34;email already exists&#34;);
+      }
+    }
+  
+    // Finally, register user if there are no errors in the form
+    if (count($errors) == 0) {
+        $password = md5($password_1);//encrypt the password before saving in the database
+  
+        $query = &#34;INSERT INTO users (username, email, password) 
+                  VALUES(&#39;$username&#39;, &#39;$email&#39;, &#39;$password&#39;)&#34;;
+        mysqli_query($db, $query);
+        $_SESSION[&#39;username&#39;] = $username;
+        $_SESSION[&#39;success&#39;] = &#34;You are now logged in&#34;;
+        header(&#39;location: index.php&#39;);
+    }
+  }
+  
+  // ... 
+  </code></pre>
+  
+  <p>Sessions are used to track logged in users and so we include a session_start() at the top of the file.</p>
+  
+  <p>The comments in the code pretty much explain everything, but I&#39;ll highlight a few things here.<span id="ezoic-pub-ad-placeholder-114" class="ezoic-adpicker-ad"></span><span class="ezoic-ad large-leaderboard-2 large-leaderboard-2114 adtester-container adtester-container-114" data-ez-name="codewithawa_com-large-leaderboard-2"><span id="div-gpt-ad-codewithawa_com-large-leaderboard-2-0" ezaw="250" ezah="250" style="position:relative;z-index:0;display:inline-block;padding:0;width:100%;max-width:1200px;margin-left:auto !important;margin-right:auto !important;min-height:250px;min-width:250px;" class="ezoic-ad"><script data-ezscrex="false" data-cfasync="false" type="text/javascript" style="display:none;">if(typeof __ez_fad_position != 'undefined'){__ez_fad_position('div-gpt-ad-codewithawa_com-large-leaderboard-2-0')};</script></span></span></p>
+  
+  <p>The if statement determines if the reg_user button on the registration form is clicked. Remember, in our form, the submit button has a name attribute set to reg_user and that is what we are referencing in the if statement.</p>
+  
+  <p>All the data is received from the form and checked to make sure that the user correctly filled the form. Passwords are also compared to make sure they match.</p>
+  
+  <p>If no errors were encountered, the user is registered in the <strong>users</strong> table in the database with a hashed password. The hashed password is for security reasons. It ensures that even if a hacker manages to gain access to your database, they would not be able to read your password.</p>
+  
+  <p>But error messages are not displaying now because our errors.php file is still empty. To display the errors, paste this code in the errors.php file.</p>
+  
+  <pre><code class="language-php">&lt;?php  if (count($errors) &gt; 0) : ?&gt;
+    &lt;div class=&#34;error&#34;&gt;
+        &lt;?php foreach ($errors as $error) : ?&gt;
+          &lt;p&gt;&lt;?php echo $error ?&gt;&lt;/p&gt;
+        &lt;?php endforeach ?&gt;
+    &lt;/div&gt;
+  &lt;?php  endif ?&gt;
+  </code></pre>
+  
+  <p>When a user is registered in the database, they are immediately logged in and redirected to the index.php page.</p>
+  
+  <p>And that&#39;s it for registration. Let&#39;s look at user login.</p>
+  
+  <h3>Login user</h3>
+  
+  <p>Logging a user in is an even easier thing to do. Just open the login page and put this code inside it:<span id="ezoic-pub-ad-placeholder-115" class="ezoic-adpicker-ad"></span><span class="ezoic-ad leader-1 leader-1115 adtester-container adtester-container-115" data-ez-name="codewithawa_com-leader-1"><span id="div-gpt-ad-codewithawa_com-leader-1-0" ezaw="300" ezah="250" style="position:relative;z-index:0;display:inline-block;padding:0;min-height:250px;min-width:300px;" class="ezoic-ad"><script data-ezscrex="false" data-cfasync="false" type="text/javascript" style="display:none;">if(typeof __ez_fad_position != 'undefined'){__ez_fad_position('div-gpt-ad-codewithawa_com-leader-1-0')};</script></span></span></p>
+  
+  <pre><code class="language-php">&lt;?php include(&#39;server.php&#39;) ?&gt;
+  &lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Registration system PHP and MySQL&lt;/title&gt;
+    &lt;link rel=&#34;stylesheet&#34; type=&#34;text/css&#34; href=&#34;style.css&#34;&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div class=&#34;header&#34;&gt;
+        &lt;h2&gt;Login&lt;/h2&gt;
+    &lt;/div&gt;
+       
+    &lt;form method=&#34;post&#34; action=&#34;login.php&#34;&gt;
+        &lt;?php include(&#39;errors.php&#39;); ?&gt;
+        &lt;div class=&#34;input-group&#34;&gt;
+            &lt;label&gt;Username&lt;/label&gt;
+            &lt;input type=&#34;text&#34; name=&#34;username&#34; &gt;
+        &lt;/div&gt;
+        &lt;div class=&#34;input-group&#34;&gt;
+            &lt;label&gt;Password&lt;/label&gt;
+            &lt;input type=&#34;password&#34; name=&#34;password&#34;&gt;
+        &lt;/div&gt;
+        &lt;div class=&#34;input-group&#34;&gt;
+            &lt;button type=&#34;submit&#34; class=&#34;btn&#34; name=&#34;login_user&#34;&gt;Login&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;p&gt;
+            Not yet a member? &lt;a href=&#34;register.php&#34;&gt;Sign up&lt;/a&gt;
+        &lt;/p&gt;
+    &lt;/form&gt;
+  &lt;/body&gt;
+  &lt;/html&gt;</code></pre>
+  
+  <p>Everything on this page is quite similar to the register.php page.</p>
+  
+  <p>Now the code that logs the user in is to be written in the same server.php file. So open the server.php file and add this code at the end of the file:</p>
+  
+  <pre><code class="language-php">
+  // ... 
+  
+  // LOGIN USER
+  if (isset($_POST[&#39;login_user&#39;])) {
+    $username = mysqli_real_escape_string($db, $_POST[&#39;username&#39;]);
+    $password = mysqli_real_escape_string($db, $_POST[&#39;password&#39;]);
+  
+    if (empty($username)) {
+        array_push($errors, &#34;Username is required&#34;);
+    }
+    if (empty($password)) {
+        array_push($errors, &#34;Password is required&#34;);
+    }
+  
+    if (count($errors) == 0) {
+        $password = md5($password);
+        $query = &#34;SELECT * FROM users WHERE username=&#39;$username&#39; AND password=&#39;$password&#39;&#34;;
+        $results = mysqli_query($db, $query);
+        if (mysqli_num_rows($results) == 1) {
+          $_SESSION[&#39;username&#39;] = $username;
+          $_SESSION[&#39;success&#39;] = &#34;You are now logged in&#34;;
+          header(&#39;location: index.php&#39;);
+        }else {
+            array_push($errors, &#34;Wrong username/password combination&#34;);
+        }
+    }
+  }
+  
+  ?&gt;</code></pre>
+  
+  <p>Again all this does is check if the user has filled the form correctly, verifies that their credentials match a record from the database and logs them in if it does. After logging in, the user is redirected them to the index.php file with a success message.</p>
+  
+  <p>Now let&#39;s see what happens in the index.php file. Open it up and paste the following code in it:</p>
+  
+  <pre><code class="language-php">&lt;?php 
+    session_start(); 
+  
+    if (!isset($_SESSION[&#39;username&#39;])) {
+        $_SESSION[&#39;msg&#39;] = &#34;You must log in first&#34;;
+        header(&#39;location: login.php&#39;);
+    }
+    if (isset($_GET[&#39;logout&#39;])) {
+        session_destroy();
+        unset($_SESSION[&#39;username&#39;]);
+        header(&#34;location: login.php&#34;);
+    }
+  ?&gt;
+  &lt;!DOCTYPE html&gt;
+  &lt;html&gt;
+  &lt;head&gt;
+      &lt;title&gt;Home&lt;/title&gt;
+      &lt;link rel=&#34;stylesheet&#34; type=&#34;text/css&#34; href=&#34;style.css&#34;&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  
+  &lt;div class=&#34;header&#34;&gt;
+      &lt;h2&gt;Home Page&lt;/h2&gt;
+  &lt;/div&gt;
+  &lt;div class=&#34;content&#34;&gt;
+        &lt;!-- notification message --&gt;
+        &lt;?php if (isset($_SESSION[&#39;success&#39;])) : ?&gt;
+        &lt;div class=&#34;error success&#34; &gt;
+            &lt;h3&gt;
+            &lt;?php 
+                echo $_SESSION[&#39;success&#39;]; 
+                unset($_SESSION[&#39;success&#39;]);
+            ?&gt;
+            &lt;/h3&gt;
+        &lt;/div&gt;
+        &lt;?php endif ?&gt;
+  
+      &lt;!-- logged in user information --&gt;
+      &lt;?php  if (isset($_SESSION[&#39;username&#39;])) : ?&gt;
+          &lt;p&gt;Welcome &lt;strong&gt;&lt;?php echo $_SESSION[&#39;username&#39;]; ?&gt;&lt;/strong&gt;&lt;/p&gt;
+          &lt;p&gt; &lt;a href=&#34;index.php?logout=&#39;1&#39;&#34; style=&#34;color: red;&#34;&gt;logout&lt;/a&gt; &lt;/p&gt;
+      &lt;?php endif ?&gt;
+  &lt;/div&gt;
+          
+  &lt;/body&gt;
+  &lt;/html&gt;</code></pre>
+  
+  <p>The first if statement checks if the user is already logged in. If they are not logged in, they will be redirected to the login page. Hence this page is accessible to only logged in users. If you&#39;d like to make any page accessible only to logged in users, all you have to do is place this if statement at the top of the file.</p>
+  
+  <p>The second if statement checks if the user has clicked the logout button. If yes, the system logs them out and redirects them back to the login page.</p>
+  
+  <p>And that&#39;s it!</p>
+  
+  <p><span id="ezoic-pub-ad-placeholder-116" class="ezoic-adpicker-ad"></span><span class="ezoic-ad large-mobile-banner-1 large-mobile-banner-1116 adtester-container adtester-container-116" data-ez-name="codewithawa_com-large-mobile-banner-1"><span id="div-gpt-ad-codewithawa_com-large-mobile-banner-1-0" ezaw="250" ezah="250" style="position:relative;z-index:0;display:inline-block;padding:0;width:100%;max-width:1200px;margin-left:auto !important;margin-right:auto !important;min-height:250px;min-width:250px;" class="ezoic-ad"><script data-ezscrex="false" data-cfasync="false" type="text/javascript" style="display:none;">if(typeof __ez_fad_position != 'undefined'){__ez_fad_position('div-gpt-ad-codewithawa_com-large-mobile-banner-1-0')};</script></span></span>Now go on, customize it to suit your needs and build an awesome site. If you have any worries or anything you need to clarify, leave it in the comments below and help will come.</p>
+  
+  <p>You can always support by sharing on social media or recommending my blog to your friends and colleagues.</p>
+  
+  <p>Best regards :D</p>
+  
+  <p>Awa Melvine</p>
+  
+  <hr/>
+  <h3>You might also like:</h3>
+   </div>
+</div>
+</div>
+<div class="col-sm-4 right-side">
+    <div class="data-content">
+     <div class="right-content">
+         <div class="border">
+             <div class="tittle">
+                 <div class="text-teturial">
+                     Subscribe to get updates
+                 </div>
+                 <hr>
+                 <div class="form">
+                     <input type="text" class="form-control" placeholder="Name">
+                     <input type="text" class="form-control" placeholder="Email">
+                     <button type="button" class="btn btn-primary">Subscribe</button>
+                 </div>
+             </div>
+         </div>
+    </div>
+    </div>
+ <div class="data-content">
+     <div class="warper border">
+        <div class="tittle">
+            <div class="text">
+                Popular post
+            </div><hr>
+        </div>
+        <div class="underline-heading"></div>
+        <a href="image-up-lpade-using-php.html">
+         <div class="popular-post">
+             <div class="popular-post-title">
+                 <div style="margin: 15px auto;">Image upload using php and MySQL database</div>
+             </div>
+         </div>
+     </a>
+     <a href="">
+         <div class="popular-post">
+             <div class="popular-post-title">
+                 <div style="margin: 15px auto;">Image upload using php and MySQL database</div>
+             </div>
+         </div>
+     </a>
+     <a href="">
+         <div class="popular-post">
+             <div class="popular-post-title">
+                 <div style="margin: 15px auto;">Image upload using php and MySQL database</div>
+             </div>
+         </div>
+     </a>
+     <a href="">
+         <div class="popular-post">
+             <div class="popular-post-title">
+                 <div style="margin: 15px auto;">Image upload using php and MySQL database</div>
+             </div>
+         </div>
+     </a>
+     <a href="">
+         <div class="popular-post">
+             <div class="popular-post-title">
+                 <div style="margin: 15px auto;">Image upload using php and MySQL database</div>
+             </div>
+         </div>
+     </a>
+     <a href="">
+         <div class="popular-post">
+             <div class="popular-post-title">
+                 <div style="margin: 15px auto;">Image upload using php and MySQL database</div>
+             </div>
+         </div>
+     </a>
+     <a href="">
+         <div class="popular-post">
+             <div class="popular-post-title">
+                 <div style="margin: 15px auto;">Image upload using php and MySQL database</div>
+             </div>
+         </div>
+     </a>
+     </div>
+    </div>
+    <div class="topics-wrapper border">
+     <h3 class="section-header">Topics</h3>
+                         <a href="">
+                 <div class="topic">
+                     <span class="fa fa-chevron-right right-chevron" style="font-size: .6em;"></span>
+                          <h4 style="margin-left: 20px;">Ajax</h4>
+                 </div>
+             </a>
+                         <a href="">
+                 <div class="topic">
+                     <span class="fa fa-chevron-right right-chevron" style="font-size: .6em;"></span>
+                          <h4 style="margin-left: 20px;">Tools</h4>
+                 </div>
+             </a>
+                         <a href="">
+                 <div class="topic">
+                     <span class="fa fa-chevron-right right-chevron" style="font-size: .6em;"></span>
+                          <h4 style="margin-left: 20px;">Tips</h4>
+                 </div>
+             </a>
+                         <a href="">
+                 <div class="topic">
+                     <span class="fa fa-chevron-right right-chevron" style="font-size: .6em;"></span>
+                          <h4 style="margin-left: 20px;">JQuery</h4>
+                 </div>
+             </a>
+                         <a href="">
+                 <div class="topic">
+                     <span class="fa fa-chevron-right right-chevron" style="font-size: .6em;"></span>
+                          <h4 style="margin-left: 20px;">JavaScript</h4>
+                 </div>
+             </a>
+                         <a href="">
+                 <div class="topic">
+                     <span class="fa fa-chevron-right right-chevron" style="font-size: .6em;"></span>
+                          <h4 style="margin-left: 20px;">PHP</h4>
+                 </div>
+             </a>
+             </div>
+</div>
+ 
+</div>
+</div>
+</div>
+</div>
+
+
+     <!-- ----------Footer sections--- -->
+     <footer>
+      <div class="footer-text">
+        <div class="privacy">
+          <a href="">Privacy Policy</a>&nbsp;। &nbsp;
+        </div>
+        
+       <div class="trem">
+        <a href="">Terms and conditions</a>&nbsp;। &nbsp;
+       </div>
+        <div class="about">
+          <a href="">About Us</a>
+        </div>
+      </div>
+      <p>Devloper by <a href="www.facebook.com/JAshadin"><span> Md jahid hossen</span></a></p>
+      </div>
+    </footer>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+   <!-- Font awesome icon kit link -->
+   <script src="https://kit.fontawesome.com/68176f7840.js" crossorigin="anonymous"></script>
+   <!-- Bootstrap js link -->
+   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+</body>
+</html>
